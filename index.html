@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRAFFIC FLOW OPTIMIZER — Team BYTEBUSTERS | HCL Jigsaw Edition 7</title>
 
-    <!-- Chart.js CDN for Live Analytics -->
+    <!-- Chart.js for Live Data Analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS for Responsive Utility Layouts -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -28,6 +28,7 @@
     </script>
 
     <style>
+        /* Custom Styles & Color System */
         :root {
             --midnight-navy: #101827;
             --electric-cyan: #38D9FF;
@@ -44,28 +45,58 @@
             user-select: none;
         }
 
-        /* Glassmorphism Styling */
+        /* Glassmorphism Styles */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.90);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(56, 217, 255, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 217, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #070a10; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--electric-cyan); }
+        .glass-panel-purple {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(115, 87, 255, 0.25);
+        }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070a10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--electric-cyan);
+        }
+
+        /* Dynamic Glow Animations */
         @keyframes cyanGlow {
             0%, 100% { box-shadow: 0 0 15px rgba(56, 217, 255, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(56, 217, 255, 0.65); }
+            50% { box-shadow: 0 0 25px rgba(56, 217, 255, 0.6); }
         }
-        .glow-cyan { animation: cyanGlow 3s infinite ease-in-out; }
 
-        .page-view { transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
-        .hidden-page { display: none !important; opacity: 0; pointer-events: none; }
+        .glow-cyan {
+            animation: cyanGlow 3s infinite ease-in-out;
+        }
 
+        /* Screen Transitions */
+        .page-view {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .hidden-page {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.98);
+        }
+
+        /* Canvas Responsive Container */
         .canvas-container {
             position: relative;
             width: 100%;
@@ -81,6 +112,7 @@
             display: block;
         }
 
+        /* Custom Progress Bars */
         .bar-track {
             height: 14px;
             background: #070a10;
@@ -103,33 +135,29 @@
 <body class="min-h-screen flex flex-col justify-between">
 
     <!-- ==========================================================================
-       1. NAVIGATION HEADER
+       1. TOP NAVIGATION BAR (Dashboard & Main App Pages)
        ========================================================================== -->
     <header id="appHeader" class="hidden-page sticky top-0 z-50 glass-panel px-6 py-3 border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
             
+            <!-- Logo & Brand Title -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('pageOpening')">
-                <div class="w-10 h-10 rounded-lg bg-slate-900 border border-cyan/40 flex items-center justify-center font-black text-cyan text-xl glow-cyan">
-                    B
-                </div>
+                <img src="image_4df19a.png" alt="BYTEBUSTERS Logo" class="h-10 w-auto rounded-lg object-contain bg-slate-900 p-1 border border-cyan/30" onerror="this.onerror=null; this.src='https://placehold.co/80x80/101827/38D9FF?text=BB';">
                 <div>
                     <h1 class="text-lg font-black tracking-tight text-white flex items-center gap-2">
                         TRAFFIC FLOW OPTIMIZER
                         <span class="text-xs px-2 py-0.5 rounded bg-cyan/10 text-cyan border border-cyan/30 font-semibold">HCL JIGSAW ED 7</span>
                     </h1>
                     <p class="text-xs text-slate-400 font-mono">
-                        BYTEBUSTERS • DPS Nadergul • Grade 8
+                        BYTEBUSTERS • DPS Nadergul
                     </p>
                 </div>
             </div>
 
-            <!-- Tabs -->
-            <nav class="flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
+            <!-- Page Navigation Tabs -->
+            <nav class="flex items-center space-x-2 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
                 <button onclick="showPage('pageDashboard')" id="tabDashboard" class="px-3 py-1.5 rounded-lg text-xs font-bold text-cyan bg-cyan/20 border border-cyan/40 transition">
-                    🎮 Live Simulation
-                </button>
-                <button onclick="showPage('pageAnalytics')" id="tabAnalytics" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition">
-                    📈 Direction Analytics
+                    🎮 Live Dashboard
                 </button>
                 <button onclick="showPage('pageHowItWorks')" id="tabHowItWorks" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition">
                     💡 How It Works
@@ -139,15 +167,12 @@
                 </button>
             </nav>
 
-            <!-- Actions -->
-            <div class="flex items-center space-x-2">
-                <button onclick="openReportModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-purple/20 text-purple border border-purple/40 hover:bg-purple/30 transition flex items-center gap-1.5">
-                    📑 Final Report
-                </button>
-                <button onclick="toggleDayNight()" id="btnDayNight" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-yellow-400 border border-slate-700 hover:bg-slate-700 transition">
+            <!-- Quick Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleDayNight()" id="btnDayNight" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-yellow-400 border border-slate-700 hover:bg-slate-700 transition flex items-center gap-1.5">
                     ☀️ Day Mode
                 </button>
-                <button onclick="exportCSV()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan/10 text-cyan border border-cyan/30 hover:bg-cyan/20 transition">
+                <button onclick="exportCSV()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan/10 text-cyan border border-cyan/30 hover:bg-cyan/20 transition flex items-center gap-1.5">
                     📊 Export CSV
                 </button>
             </div>
@@ -156,32 +181,35 @@
     </header>
 
     <!-- ==========================================================================
-       2. OPENING / HERO SCREEN
+       2. OPENING SCREEN (Cinematic Intro Landing Page)
        ========================================================================== -->
     <section id="pageOpening" class="page-view min-h-screen flex flex-col justify-between p-6 relative overflow-hidden">
         
-        <canvas id="bgCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-30 z-0"></canvas>
+        <!-- Animated Futuristic City Background Canvas -->
+        <canvas id="bgCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0"></canvas>
 
+        <!-- Top Header Info -->
         <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-between items-center border-b border-slate-800/80 pb-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 rounded-xl bg-slate-900 border border-cyan/40 flex items-center justify-center font-black text-cyan text-2xl glow-cyan">
-                    BB
-                </div>
+            <div class="flex items-center space-x-4">
+                <img src="image_4df19a.png" alt="BYTEBUSTERS" class="h-16 w-auto rounded-xl bg-slate-900/80 p-1.5 border border-cyan/40 glow-cyan object-contain" onerror="this.onerror=null; this.src='https://placehold.co/120x120/101827/38D9FF?text=BYTEBUSTERS';">
                 <div>
-                    <span class="text-xs font-mono font-bold tracking-widest text-cyan uppercase">Official Competition Entry</span>
+                    <span class="text-xs font-mono font-bold tracking-widest text-cyan uppercase">Official Project Entry</span>
                     <h2 class="text-xl font-extrabold text-white">BYTEBUSTERS</h2>
                     <p class="text-xs text-slate-400">Delhi Public School, Nadergul • Grade 8</p>
                 </div>
             </div>
-            <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple/20 text-purple border border-purple/40">
-                HCL JIGSAW — EDITION 7 — ROUND 2
-            </span>
+            <div class="text-right">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple/20 text-purple border border-purple/40">
+                    HCL JIGSAW — EDITION 7 — ROUND 2
+                </span>
+            </div>
         </div>
 
-        <div class="relative z-10 max-w-4xl mx-auto w-full text-center my-auto py-10">
+        <!-- Center Main Title Block -->
+        <div class="relative z-10 max-w-4xl mx-auto w-full text-center my-auto py-12">
             <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyan/10 border border-cyan/30 text-cyan text-xs font-bold mb-6">
                 <span class="w-2 h-2 rounded-full bg-cyan animate-pulse"></span>
-                <span>Adaptive Traffic Signal & Direction Analytics Engine</span>
+                <span>AI-Assisted Traffic Signal Simulation Prototype</span>
             </div>
             
             <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-4 uppercase drop-shadow-lg">
@@ -193,25 +221,24 @@
             </p>
 
             <p class="text-sm md:text-base text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-                An intelligent traffic simulation exploring how dynamic adaptive traffic signals reduce waiting times, optimize direction-wise vehicle throughput, and prevent gridlocks compared to traditional fixed timers.
+                An intelligent traffic simulation exploring how adaptive traffic signals reduce unnecessary waiting times, prevent gridlock, and optimize urban traffic throughput compared to traditional fixed-timer traffic signals.
             </p>
 
+            <!-- Main Action Buttons -->
             <div class="flex flex-wrap justify-center items-center gap-4">
-                <button onclick="startAppFromHero()" class="px-8 py-4 rounded-xl text-base font-bold bg-cyan text-slate-950 hover:bg-cyan/90 transition transform hover:-translate-y-0.5 shadow-lg shadow-cyan/20 flex items-center gap-2">
+                <button onclick="showPage('pageDashboard')" class="px-8 py-4 rounded-xl text-base font-bold bg-cyan text-slate-950 hover:bg-cyan/90 transition transform hover:-translate-y-0.5 shadow-lg shadow-cyan/20 flex items-center gap-2">
                     ▶ START SIMULATION
-                </button>
-                <button onclick="showPage('pageAnalytics')" class="px-6 py-4 rounded-xl text-sm font-semibold bg-purple/20 text-purple border border-purple/40 hover:bg-purple/30 transition">
-                    📈 Direction Analytics
                 </button>
                 <button onclick="showPage('pageHowItWorks')" class="px-6 py-4 rounded-xl text-sm font-semibold bg-slate-900/90 text-white border border-slate-700 hover:border-cyan hover:bg-slate-800 transition">
                     💡 How It Works
                 </button>
-                <button onclick="showPage('pageTeam')" class="px-6 py-4 rounded-xl text-sm font-semibold bg-slate-900/90 text-slate-300 border border-slate-800 hover:bg-slate-800 transition">
+                <button onclick="showPage('pageTeam')" class="px-6 py-4 rounded-xl text-sm font-semibold bg-purple/20 text-purple border border-purple/40 hover:bg-purple/30 transition">
                     👥 Meet The Team
                 </button>
             </div>
         </div>
 
+        <!-- Team Roster Section -->
         <div class="relative z-10 max-w-5xl mx-auto w-full border-t border-slate-800/80 pt-6">
             <h3 class="text-xs font-mono uppercase tracking-widest text-slate-400 text-center mb-4">Project Team Members (Grade 8)</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
@@ -236,15 +263,17 @@
 
     </section>
 
+
     <!-- ==========================================================================
-       3. MAIN SIMULATION DASHBOARD
+       3. MAIN DASHBOARD PAGE (Dual-Intersection Simulation & Analytics)
        ========================================================================== -->
     <main id="pageDashboard" class="page-view hidden-page max-w-7xl mx-auto w-full px-4 py-6 flex-grow space-y-6">
 
-        <!-- Controls Toolbar -->
+        <!-- Simulation Control Bar -->
         <section class="glass-panel p-4 rounded-2xl border border-slate-800">
             <div class="flex flex-wrap items-center justify-between gap-4">
                 
+                <!-- Play / Pause / Reset Buttons -->
                 <div class="flex items-center space-x-2">
                     <button id="btnPlayPause" onclick="togglePlayPause()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-mint text-slate-950 hover:bg-mint/90 transition shadow-lg shadow-mint/20 flex items-center gap-2">
                         ▶ START SIMULATION
@@ -257,7 +286,9 @@
                     </button>
                 </div>
 
+                <!-- Simulation Settings Controls -->
                 <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
+                    
                     <div class="flex items-center space-x-1.5 bg-slate-900 p-1.5 rounded-lg border border-slate-800">
                         <span class="text-slate-400">Demand:</span>
                         <select id="selectDemand" onchange="changeDemand()" class="bg-slate-800 text-cyan rounded px-2 py-1 outline-none">
@@ -281,17 +312,19 @@
                         <span class="text-slate-400">Seed:</span>
                         <input id="inputSeed" type="number" value="20261029" onchange="changeSeed()" class="w-20 bg-slate-800 text-white rounded px-2 py-1 outline-none">
                     </div>
+
                 </div>
 
+                <!-- Live Timer Badge -->
                 <div class="flex items-center space-x-3 bg-slate-900/90 px-4 py-2 rounded-xl border border-slate-800 font-mono">
-                    <span class="text-xs text-slate-400">SIM CLOCK:</span>
+                    <span class="text-xs text-slate-400">CLOCK:</span>
                     <span id="txtSimClock" class="text-lg font-bold text-cyan">00:00</span>
                     <span class="text-xs text-slate-500">/ 15:00</span>
                 </div>
 
             </div>
 
-            <!-- Manual Vehicle Dispatchers -->
+            <!-- Manual Vehicle Dispatch Row -->
             <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
                 <span class="text-xs font-mono font-bold text-slate-400 uppercase">Inject Manual Vehicle:</span>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-grow max-w-xl">
@@ -311,16 +344,16 @@
             </div>
         </section>
 
-        <!-- Side-by-Side Canvas Viewports -->
+        <!-- Side-by-Side Dual Canvas Viewport -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            <!-- FIXED-TIMER INTERSECTION -->
+            <!-- LEFT: FIXED TIMER SYSTEM -->
             <div class="glass-panel p-5 rounded-2xl border border-blue-500/30 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
                         <div class="flex items-center space-x-2">
                             <span class="w-3 h-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50"></span>
-                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">A | Fixed-Timer Signal System</h3>
+                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">A | Fixed-Timer Signal</h3>
                         </div>
                         <span id="badgeFixedPhase" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">
                             N/S GREEN (18s)
@@ -332,6 +365,7 @@
                     </div>
                 </div>
 
+                <!-- Fixed Telemetry Strip -->
                 <div class="grid grid-cols-4 gap-2 mt-4 pt-3 border-t border-slate-800 font-mono text-center">
                     <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800">
                         <p class="text-[10px] text-slate-400 uppercase">Arrived</p>
@@ -352,13 +386,13 @@
                 </div>
             </div>
 
-            <!-- SMART ADAPTIVE INTERSECTION -->
+            <!-- RIGHT: SMART ADAPTIVE SYSTEM -->
             <div class="glass-panel p-5 rounded-2xl border border-mint/30 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
                         <div class="flex items-center space-x-2">
                             <span class="w-3 h-3 rounded-full bg-mint shadow-lg shadow-mint/50 animate-pulse"></span>
-                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">B | Smart Adaptive Signal System</h3>
+                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">B | Smart Adaptive Signal</h3>
                         </div>
                         <span id="badgeSmartPhase" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-mint/20 text-mint border border-mint/40">
                             N/S GREEN (18s)
@@ -370,6 +404,7 @@
                     </div>
                 </div>
 
+                <!-- Smart Telemetry Strip -->
                 <div class="grid grid-cols-4 gap-2 mt-4 pt-3 border-t border-slate-800 font-mono text-center">
                     <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800">
                         <p class="text-[10px] text-slate-400 uppercase">Arrived</p>
@@ -392,19 +427,20 @@
 
         </section>
 
-        <!-- Live Metrics Comparison Bars -->
-        <section class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wide">📊 Performance Comparison Bars</h3>
-                <span class="text-xs font-mono text-slate-400">Deterministic Arrival Schedule</span>
-            </div>
+        <!-- Metrics & Comparative Analytics -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Live Metrics Visual Comparison -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 lg:col-span-2 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide">📊 Performance Comparison Bars</h3>
+                    <span class="text-xs font-mono text-slate-400">Deterministic Schedule Evaluation</span>
+                </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <!-- Avg Delay -->
+                <!-- Metric 1: Avg Wait Time -->
                 <div class="space-y-1">
                     <div class="flex justify-between text-xs font-semibold">
-                        <span class="text-slate-300">Average Delay (Lower is Better)</span>
+                        <span class="text-slate-300">Average Delay per Vehicle (Lower is Better)</span>
                         <span id="badgeDeltaWait" class="font-mono text-mint font-bold">-0.0% delay</span>
                     </div>
                     <div class="space-y-1">
@@ -421,10 +457,10 @@
                     </div>
                 </div>
 
-                <!-- Vehicles Cleared -->
+                <!-- Metric 2: Vehicles Cleared -->
                 <div class="space-y-1">
                     <div class="flex justify-between text-xs font-semibold">
-                        <span class="text-slate-300">Cleared Vehicles (Higher is Better)</span>
+                        <span class="text-slate-300">Throughput Cleared Vehicles (Higher is Better)</span>
                         <span id="badgeDeltaCleared" class="font-mono text-mint font-bold">+0.0% cleared</span>
                     </div>
                     <div class="space-y-1">
@@ -441,10 +477,10 @@
                     </div>
                 </div>
 
-                <!-- Peak Queue -->
+                <!-- Metric 3: Peak Queue -->
                 <div class="space-y-1">
                     <div class="flex justify-between text-xs font-semibold">
-                        <span class="text-slate-300">Peak Queue Length (Lower is Better)</span>
+                        <span class="text-slate-300">Peak Queue Congestion (Lower is Better)</span>
                         <span id="badgeDeltaQueue" class="font-mono text-mint font-bold">-0 veh</span>
                     </div>
                     <div class="space-y-1">
@@ -462,200 +498,83 @@
                 </div>
 
             </div>
-        </section>
 
-    </main>
+            <!-- Approach Queue Table -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wide border-b border-slate-800 pb-2 mb-3">
+                        🚦 Approach Queues
+                    </h3>
+                    <table class="w-full text-left font-mono text-xs">
+                        <thead>
+                            <tr class="text-slate-400 border-b border-slate-800 text-[10px]">
+                                <th class="pb-2">Road Approach</th>
+                                <th class="pb-2 text-center">Fixed Q</th>
+                                <th class="pb-2 text-center">Smart Q</th>
+                                <th class="pb-2 text-center">Smart Light</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/50">
+                            <tr>
+                                <td class="py-2 text-cyan font-bold">North (Southbound)</td>
+                                <td id="tblFixedNorth" class="text-center text-white">0</td>
+                                <td id="tblSmartNorth" class="text-center text-mint font-bold">0</td>
+                                <td id="tblSigNorth" class="text-center text-rose-500 font-bold">RED</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 text-amber-400 font-bold">East (Westbound)</td>
+                                <td id="tblFixedEast" class="text-center text-white">0</td>
+                                <td id="tblSmartEast" class="text-center text-mint font-bold">0</td>
+                                <td id="tblSigEast" class="text-center text-rose-500 font-bold">RED</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 text-emerald-400 font-bold">South (Northbound)</td>
+                                <td id="tblFixedSouth" class="text-center text-white">0</td>
+                                <td id="tblSmartSouth" class="text-center text-mint font-bold">0</td>
+                                <td id="tblSigSouth" class="text-center text-rose-500 font-bold">RED</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 text-purple font-bold">West (Eastbound L➔R)</td>
+                                <td id="tblFixedWest" class="text-center text-white">0</td>
+                                <td id="tblSmartWest" class="text-center text-mint font-bold">0</td>
+                                <td id="tblSigWest" class="text-center text-rose-500 font-bold">RED</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <!-- ==========================================================================
-       4. ADVANCED DIRECTION-WISE TRAFFIC MONITOR
-       ========================================================================== -->
-    <main id="pageAnalytics" class="page-view hidden-page max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-grow">
-        
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
-            <div>
-                <span class="text-xs font-mono font-bold text-cyan uppercase tracking-widest">Comprehensive Telemetry</span>
-                <h2 class="text-2xl font-black text-white">DIRECTION-WISE TRAFFIC MONITOR</h2>
-            </div>
-            <button onclick="openReportModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple/20 text-purple border border-purple/40 hover:bg-purple/30 transition flex items-center gap-2">
-                📑 Generate HCL Jigsaw Report
-            </button>
-        </div>
-
-        <!-- Direction Cards Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            
-            <!-- NORTH -->
-            <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-cyan space-y-3">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="font-bold text-sm text-cyan flex items-center gap-1.5">⬆ NORTH ROAD</span>
-                    <span id="densityNorth" class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan/10 text-cyan border border-cyan/30">LOW</span>
-                </div>
-                <div class="space-y-1.5 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">Entered:</span><span id="nEntered" class="text-white">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Cleared (Smart/Fixed):</span><span><strong id="nClearedSmart" class="text-mint">0</strong> / <span id="nClearedFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Current Waiting:</span><span id="nWaiting" class="text-amber-400">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Peak Queue (Smart/Fixed):</span><span><strong id="nPeakSmart" class="text-mint">0</strong> / <span id="nPeakFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Avg Wait Time:</span><span id="nWaitTime" class="text-cyan">0.0s</span></div>
-                </div>
-            </div>
-
-            <!-- SOUTH -->
-            <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-mint space-y-3">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="font-bold text-sm text-mint flex items-center gap-1.5">⬇ SOUTH ROAD</span>
-                    <span id="densitySouth" class="text-[10px] font-mono px-2 py-0.5 rounded bg-mint/10 text-mint border border-mint/30">LOW</span>
-                </div>
-                <div class="space-y-1.5 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">Entered:</span><span id="sEntered" class="text-white">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Cleared (Smart/Fixed):</span><span><strong id="sClearedSmart" class="text-mint">0</strong> / <span id="sClearedFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Current Waiting:</span><span id="sWaiting" class="text-amber-400">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Peak Queue (Smart/Fixed):</span><span><strong id="sPeakSmart" class="text-mint">0</strong> / <span id="sPeakFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Avg Wait Time:</span><span id="sWaitTime" class="text-cyan">0.0s</span></div>
-                </div>
-            </div>
-
-            <!-- EAST -->
-            <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-amber-400 space-y-3">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="font-bold text-sm text-amber-400 flex items-center gap-1.5">➔ EAST (L to R)</span>
-                    <span id="densityEast" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30">LOW</span>
-                </div>
-                <div class="space-y-1.5 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">Entered:</span><span id="eEntered" class="text-white">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Cleared (Smart/Fixed):</span><span><strong id="eClearedSmart" class="text-mint">0</strong> / <span id="eClearedFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Current Waiting:</span><span id="eWaiting" class="text-amber-400">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Peak Queue (Smart/Fixed):</span><span><strong id="ePeakSmart" class="text-mint">0</strong> / <span id="ePeakFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Avg Wait Time:</span><span id="eWaitTime" class="text-cyan">0.0s</span></div>
-                </div>
-            </div>
-
-            <!-- WEST -->
-            <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-purple space-y-3">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="font-bold text-sm text-purple flex items-center gap-1.5">⬅ WEST ROAD</span>
-                    <span id="densityWest" class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple/10 text-purple border border-purple/30">LOW</span>
-                </div>
-                <div class="space-y-1.5 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">Entered:</span><span id="wEntered" class="text-white">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Cleared (Smart/Fixed):</span><span><strong id="wClearedSmart" class="text-mint">0</strong> / <span id="wClearedFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Current Waiting:</span><span id="wWaiting" class="text-amber-400">0</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Peak Queue (Smart/Fixed):</span><span><strong id="wPeakSmart" class="text-mint">0</strong> / <span id="wPeakFixed" class="text-slate-300">0</span></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Avg Wait Time:</span><span id="wWaitTime" class="text-cyan">0.0s</span></div>
+                <div class="mt-4 p-3 rounded-xl bg-cyan/5 border border-cyan/20 text-xs text-slate-300 leading-relaxed">
+                    💡 <strong class="text-cyan">Scientific Control:</strong> Both intersections receive the exact same deterministic vehicle arrival queue schedule generated by the random seed.
                 </div>
             </div>
 
         </section>
 
-        <!-- Signal Timing Breakdown -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
-                <h3 class="text-xs font-mono font-bold text-cyan uppercase border-b border-slate-800 pb-2">
-                    ⏱ SIGNAL TIMING ANALYTICS — FIXED SYSTEM
-                </h3>
-                <div class="space-y-2 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">North / South Green Time:</span><span id="fixedNsGreen" class="text-white">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">East / West Green Time:</span><span id="fixedEwGreen" class="text-white">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total Actual Green Time:</span><span id="fixedTotalGreen" class="text-mint font-bold">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total Yellow Transition Time:</span><span id="fixedTotalYellow" class="text-amber-400">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total All-Red Safety Clearance:</span><span id="fixedTotalRed" class="text-rose-400">0.0s</span></div>
-                </div>
-            </div>
-
-            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
-                <h3 class="text-xs font-mono font-bold text-mint uppercase border-b border-slate-800 pb-2">
-                    ⏱ SIGNAL TIMING ANALYTICS — SMART ADAPTIVE
-                </h3>
-                <div class="space-y-2 font-mono text-xs">
-                    <div class="flex justify-between"><span class="text-slate-400">North / South Shared Green Time:</span><span id="smartNsGreen" class="text-white">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">East / West Shared Green Time:</span><span id="smartEwGreen" class="text-white">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total Actual Green Time:</span><span id="smartTotalGreen" class="text-mint font-bold">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total Yellow Transition Time:</span><span id="smartTotalYellow" class="text-amber-400">0.0s</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Total All-Red Safety Clearance:</span><span id="smartTotalRed" class="text-rose-400">0.0s</span></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detailed Directional Breakdown Table -->
-        <section class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
-            <h3 class="text-sm font-bold text-white uppercase tracking-wide">
-                📋 DIRECTION-WISE COMPARATIVE BREAKDOWN
-            </h3>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left font-mono text-xs">
-                    <thead>
-                        <tr class="text-slate-400 border-b border-slate-800 text-[10px] uppercase">
-                            <th class="pb-2">Metric</th>
-                            <th class="pb-2 text-center">North</th>
-                            <th class="pb-2 text-center">South</th>
-                            <th class="pb-2 text-center">East</th>
-                            <th class="pb-2 text-center">West</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800/60">
-                        <tr>
-                            <td class="py-2.5 text-slate-300 font-bold">Vehicles Entered</td>
-                            <td id="tblNEntered" class="text-center text-white">0</td>
-                            <td id="tblSEntered" class="text-center text-white">0</td>
-                            <td id="tblEEntered" class="text-center text-white">0</td>
-                            <td id="tblWEntered" class="text-center text-white">0</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2.5 text-mint font-bold">Vehicles Cleared (Smart)</td>
-                            <td id="tblNClearedSmart" class="text-center text-mint font-bold">0</td>
-                            <td id="tblSClearedSmart" class="text-center text-mint font-bold">0</td>
-                            <td id="tblEClearedSmart" class="text-center text-mint font-bold">0</td>
-                            <td id="tblWClearedSmart" class="text-center text-mint font-bold">0</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2.5 text-blue-400 font-bold">Vehicles Cleared (Fixed)</td>
-                            <td id="tblNClearedFixed" class="text-center text-blue-400">0</td>
-                            <td id="tblSClearedFixed" class="text-center text-blue-400">0</td>
-                            <td id="tblEClearedFixed" class="text-center text-blue-400">0</td>
-                            <td id="tblWClearedFixed" class="text-center text-blue-400">0</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2.5 text-amber-400 font-bold">Peak Queue (Smart)</td>
-                            <td id="tblNPeakSmart" class="text-center text-amber-400">0</td>
-                            <td id="tblSPeakSmart" class="text-center text-amber-400">0</td>
-                            <td id="tblEPeakSmart" class="text-center text-amber-400">0</td>
-                            <td id="tblWPeakSmart" class="text-center text-amber-400">0</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2.5 text-cyan font-bold">Avg Waiting Time (Smart)</td>
-                            <td id="tblNWaitSmart" class="text-center text-cyan">0.0s</td>
-                            <td id="tblSWaitSmart" class="text-center text-cyan">0.0s</td>
-                            <td id="tblEWaitSmart" class="text-center text-cyan">0.0s</td>
-                            <td id="tblWWaitSmart" class="text-center text-cyan">0.0s</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Charts Grid -->
+        <!-- Chart.js Graph Analytics Section -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="glass-panel p-5 rounded-2xl border border-slate-800">
-                <h3 class="text-xs font-mono font-bold text-slate-300 uppercase mb-3">Peak Queue Comparison by Direction</h3>
+                <h3 class="text-xs font-mono font-bold text-slate-300 uppercase mb-3">Timeline: Vehicles Cleared Over Time</h3>
                 <div class="h-64">
-                    <canvas id="chartPeakByDir"></canvas>
+                    <canvas id="chartCleared"></canvas>
                 </div>
             </div>
 
             <div class="glass-panel p-5 rounded-2xl border border-slate-800">
-                <h3 class="text-xs font-mono font-bold text-slate-300 uppercase mb-3">Vehicles Cleared by Direction</h3>
+                <h3 class="text-xs font-mono font-bold text-slate-300 uppercase mb-3">Timeline: Average Waiting Time (s)</h3>
                 <div class="h-64">
-                    <canvas id="chartClearedByDir"></canvas>
+                    <canvas id="chartWait"></canvas>
                 </div>
             </div>
         </section>
 
     </main>
 
+
     <!-- ==========================================================================
-       5. HOW IT WORKS PAGE
+       4. HOW IT WORKS PAGE
        ========================================================================== -->
     <main id="pageHowItWorks" class="page-view hidden-page max-w-5xl mx-auto w-full px-4 py-8 space-y-8 flex-grow">
+        
         <div class="text-center space-y-3">
             <span class="px-3 py-1 rounded-full text-xs font-bold bg-cyan/10 text-cyan border border-cyan/30">System Architecture</span>
             <h2 class="text-3xl font-black text-white uppercase">How Smart Adaptive Signals Work</h2>
@@ -665,6 +584,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            
             <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
                 <div class="w-10 h-10 rounded-xl bg-cyan/20 text-cyan border border-cyan/40 flex items-center justify-center font-bold text-lg">1</div>
                 <h3 class="text-base font-bold text-white">COUNT</h3>
@@ -696,23 +616,39 @@
                     Both simulations share the identical deterministic arrival schedule for a scientifically fair performance comparison.
                 </p>
             </div>
+
         </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-cyan/30 space-y-4">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                ⚙️ Algorithmic Green-Time Formula
+            </h3>
+            <p class="text-xs font-mono text-cyan bg-slate-900 p-3 rounded-xl border border-slate-800 leading-relaxed">
+                Target Green Duration = Math.max(8s, Math.min(28s, 8.0 + (Active_Queue * 2.2s)))
+            </p>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                If the cross-street queue exceeds the active queue by 3 or more vehicles, the smart system truncates the active green light early to prevent cross-street drivers from experiencing excessive waiting times.
+            </p>
+        </div>
+
     </main>
 
+
     <!-- ==========================================================================
-       6. TEAM & ABOUT PAGE
+       5. TEAM & ABOUT PAGE
        ========================================================================== -->
     <main id="pageTeam" class="page-view hidden-page max-w-5xl mx-auto w-full px-4 py-8 space-y-8 flex-grow">
+        
         <div class="glass-panel p-8 rounded-2xl border border-purple/30 text-center space-y-4">
-            <div class="w-20 h-20 rounded-2xl bg-slate-900 mx-auto border border-purple/40 flex items-center justify-center font-black text-purple text-3xl glow-cyan">
-                BB
-            </div>
+            <img src="image_4df19a.png" alt="BYTEBUSTERS Logo" class="h-24 w-auto mx-auto rounded-2xl bg-slate-900 p-2 border border-purple/40 glow-cyan object-contain" onerror="this.onerror=null; this.src='https://placehold.co/150x150/101827/7357FF?text=BYTEBUSTERS';">
+            
             <h2 class="text-3xl font-black text-white">TEAM BYTEBUSTERS</h2>
             <p class="text-sm font-semibold text-purple">HCL JIGSAW — EDITION 7 — ROUND 2</p>
             <p class="text-xs text-slate-400">Delhi Public School, Nadergul • Grade 8</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
             <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
                 <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">👨‍💻 Team Members</h3>
                 <ul class="space-y-3 text-xs">
@@ -736,87 +672,35 @@
             </div>
 
             <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-                <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">🎯 Project Purpose</h3>
+                <h3 class="text-base font-bold text-white border-b border-slate-800 pb-2">🎯 Project Objective</h3>
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Traffic congestion in urban centers causes severe delays, fuel waste, and carbon emissions. Adaptive traffic signals dynamically sense congestion and allocate green light time where demand is highest, reducing average delays by up to 30-50% without physical infrastructure changes.
+                    Urban traffic congestion leads to wasted fuel, higher carbon emissions, and severe productivity loss.
+                </p>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    <strong>TRAFFIC FLOW OPTIMIZER</strong> demonstrates how intelligent adaptive signal timings reduce average wait times by over 25% without requiring expensive physical road expansion.
                 </p>
             </div>
+
         </div>
+
     </main>
 
+
     <!-- ==========================================================================
-       7. HCL JIGSAW SUMMARY REPORT MODAL
+       6. FOOTER
        ========================================================================== -->
-    <div id="modalReport" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-panel max-w-3xl w-full max-h-[90vh] overflow-y-auto rounded-2xl p-6 border border-cyan/40 space-y-6">
-            
-            <div class="flex justify-between items-start border-b border-slate-800 pb-4">
-                <div>
-                    <span class="text-xs font-mono text-cyan uppercase">HCL Jigsaw Edition 7 — Round 2 Report</span>
-                    <h2 class="text-2xl font-black text-white">TRAFFIC FLOW OPTIMIZER SUMMARY</h2>
-                    <p class="text-xs text-slate-400">Team BYTEBUSTERS • Delhi Public School, Nadergul</p>
-                </div>
-                <button onclick="closeReportModal()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs text-center">
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                    <p class="text-[10px] text-slate-400">SMART CLEARED</p>
-                    <p id="rptSmartCleared" class="text-lg font-bold text-mint">0</p>
-                </div>
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                    <p class="text-[10px] text-slate-400">FIXED CLEARED</p>
-                    <p id="rptFixedCleared" class="text-lg font-bold text-blue-400">0</p>
-                </div>
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                    <p class="text-[10px] text-slate-400">DELAY REDUCTION</p>
-                    <p id="rptDelayRed" class="text-lg font-bold text-cyan">0.0%</p>
-                </div>
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                    <p class="text-[10px] text-slate-400">SMART GREEN TIME</p>
-                    <p id="rptSmartGreen" class="text-lg font-bold text-amber-400">0.0s</p>
-                </div>
-            </div>
-
-            <div class="space-y-3">
-                <h3 class="text-xs font-mono font-bold text-white uppercase">Directional Traffic Summary</h3>
-                <table class="w-full text-left font-mono text-xs">
-                    <thead>
-                        <tr class="text-slate-400 border-b border-slate-800 text-[10px] uppercase">
-                            <th class="pb-2">Direction</th>
-                            <th class="pb-2 text-center">Entered</th>
-                            <th class="pb-2 text-center">Smart Cleared</th>
-                            <th class="pb-2 text-center">Fixed Cleared</th>
-                            <th class="pb-2 text-center">Peak Queue</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800/60">
-                        <tr><td class="py-2 text-cyan font-bold">North</td><td id="rptNEntered" class="text-center">0</td><td id="rptNClearedS" class="text-center text-mint font-bold">0</td><td id="rptNClearedF" class="text-center">0</td><td id="rptNPeak" class="text-center">0</td></tr>
-                        <tr><td class="py-2 text-mint font-bold">South</td><td id="rptSEntered" class="text-center">0</td><td id="rptSClearedS" class="text-center text-mint font-bold">0</td><td id="rptSClearedF" class="text-center">0</td><td id="rptSPeak" class="text-center">0</td></tr>
-                        <tr><td class="py-2 text-amber-400 font-bold">East</td><td id="rptEEntered" class="text-center">0</td><td id="rptEClearedS" class="text-center text-mint font-bold">0</td><td id="rptEClearedF" class="text-center">0</td><td id="rptEPeak" class="text-center">0</td></tr>
-                        <tr><td class="py-2 text-purple font-bold">West</td><td id="rptWEntered" class="text-center">0</td><td id="rptWClearedS" class="text-center text-mint font-bold">0</td><td id="rptWClearedF" class="text-center">0</td><td id="rptWPeak" class="text-center">0</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="flex justify-end space-x-3 pt-4 border-t border-slate-800">
-                <button onclick="closeReportModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Close</button>
-                <button onclick="exportCSV()" class="px-4 py-2 rounded-xl text-xs font-bold bg-cyan text-slate-950 hover:bg-cyan/90">Export CSV Data</button>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- FOOTER -->
     <footer class="glass-panel mt-12 py-4 px-6 border-t border-slate-800 text-center text-xs text-slate-400 font-mono">
         TRAFFIC FLOW OPTIMIZER • Team BYTEBUSTERS • HCL Jigsaw Edition 7 Round 2 • Delhi Public School, Nadergul
     </footer>
 
+
     <!-- ==========================================================================
-       8. SIMULATION LOGIC & CANVAS ANIMATION ENGINE
+       7. JAVASCRIPT SIMULATION ENGINE & LOGIC
        ========================================================================== -->
     <script>
-        // LCG Seeded Random Number Generator
+        /* --------------------------------------------------------------------------
+           A. SEEDED RANDOM NUMBER GENERATOR (Linear Congruential Generator)
+           -------------------------------------------------------------------------- */
         class SeededRandom {
             constructor(seed) {
                 this.seed = seed % 2147483647;
@@ -827,35 +711,43 @@
                 return (this.seed - 1) / 2147483646;
             }
             uniform(min, max) { return min + this.next() * (max - min); }
-            exponential(rate) { return -Math.log(1.0 - Math.max(0.0001, this.next())) / rate; }
+            exponential(rate) { return -Math.log(1.0 - this.next()) / rate; }
             choice(array) { return array[Math.floor(this.next() * array.length)]; }
         }
 
+        /* --------------------------------------------------------------------------
+           B. VEHICLE SPECS & VEHICLE CLASS
+           -------------------------------------------------------------------------- */
         const DIRECTIONS = ["North", "East", "South", "West"];
+        
         const VEHICLE_TYPES = [
             { type: 'compact', length: 22, width: 11, speedRatio: 1.1, color: '#38D9FF' },
             { type: 'sedan', length: 26, width: 12, speedRatio: 1.0, color: '#16D6A5' },
             { type: 'suv', length: 28, width: 14, speedRatio: 0.95, color: '#fbbf24' },
-            { type: 'bus', length: 38, width: 15, speedRatio: 0.8, color: '#7357FF' }
+            { type: 'bus', length: 38, width: 15, speedRatio: 0.8, color: '#7357FF' },
+            { type: 'autorickshaw', length: 18, width: 10, speedRatio: 0.9, color: '#f59e0b' }
         ];
 
         class Car {
-            constructor(direction, arrivalTime, id, spec) {
-                this.id = id;
+            constructor(direction, arrivalTime, number, spec) {
                 this.direction = direction;
                 this.arrivalTime = arrivalTime;
+                this.number = number;
                 this.spec = spec;
                 this.waiting = 0.0;
                 this.cleared = false;
                 this.x = 0.0;
                 this.y = 0.0;
-                this.speed = 95.0 * spec.speedRatio; // Pixels per sim second
+                this.speed = 90.0 * spec.speedRatio; // pixels per sim second
             }
         }
 
+        /* --------------------------------------------------------------------------
+           C. INTERSECTION SIMULATION CORE CLASS
+           -------------------------------------------------------------------------- */
         class IntersectionSimulation {
             constructor(mode, schedule, seed) {
-                this.mode = mode;
+                this.mode = mode; // "Fixed" or "Smart"
                 this.schedule = schedule;
                 this.rng = new SeededRandom(seed);
                 this.reset();
@@ -865,7 +757,7 @@
                 this.time = 0.0;
                 this.cars = [];
                 this.nextArrivalIndex = 0;
-                this.nextCarId = 1;
+                this.nextCarNumber = 1;
                 this.phase = 0; // 0 = NS Green, 1 = EW Green
                 this.phaseElapsed = 0.0;
                 this.yellowElapsed = 0.0;
@@ -876,32 +768,21 @@
                 this.maxQueue = 0;
                 this.totalArrived = 0;
                 this.activeSmartGreenTime = 18.0;
-
-                this.nsGreenTime = 0.0;
-                this.ewGreenTime = 0.0;
-                this.totalYellowTime = 0.0;
-                this.totalRedTime = 0.0;
-
-                this.dirEntered = { North: 0, East: 0, South: 0, West: 0 };
-                this.dirCleared = { North: 0, East: 0, South: 0, West: 0 };
-                this.dirPeakQueue = { North: 0, East: 0, South: 0, West: 0 };
-                this.dirWaitTime = { North: 0, East: 0, South: 0, West: 0 };
             }
 
             injectCar(direction) {
                 const spec = VEHICLE_TYPES[Math.floor(Math.random() * VEHICLE_TYPES.length)];
-                const car = new Car(direction, this.time, this.nextCarId++, spec);
+                const car = new Car(direction, this.time, this.nextCarNumber++, spec);
                 this.setSpawnPosition(car);
                 this.cars.push(car);
                 this.totalArrived++;
-                this.dirEntered[direction]++;
             }
 
             setSpawnPosition(car) {
-                if (car.direction === "North") { car.x = 270; car.y = -30; }
-                else if (car.direction === "South") { car.x = 330; car.y = 630; }
-                else if (car.direction === "West") { car.x = 630; car.y = 270; }
-                else if (car.direction === "East") { car.x = -30; car.y = 330; }
+                if (car.direction === "North") { car.x = 270; car.y = -30; }       // Moves South
+                else if (car.direction === "South") { car.x = 330; car.y = 630; }  // Moves North
+                else if (car.direction === "West") { car.x = 630; car.y = 270; }   // Moves West
+                else if (car.direction === "East") { car.x = -30; car.y = 330; }   // Moves East (Left to Right)
             }
 
             arrivalsNow() {
@@ -910,11 +791,10 @@
                     this.schedule[this.nextArrivalIndex].time <= this.time
                 ) {
                     const item = this.schedule[this.nextArrivalIndex];
-                    const car = new Car(item.direction, item.time, this.nextCarId++, item.spec);
+                    const car = new Car(item.direction, item.time, this.nextCarNumber++, item.spec);
                     this.setSpawnPosition(car);
                     this.cars.push(car);
                     this.totalArrived++;
-                    this.dirEntered[item.direction]++;
                     this.nextArrivalIndex++;
                 }
             }
@@ -932,7 +812,9 @@
                 for (let car of this.cars) {
                     if (car.cleared) continue;
                     const d = this.distanceToStop(car);
-                    if (d >= 0 && d < 145) res[car.direction]++;
+                    if (d >= 0 && d < 145) {
+                        res[car.direction]++;
+                    }
                 }
                 return res;
             }
@@ -942,18 +824,27 @@
             lightState(direction) {
                 const axis = (direction === "North" || direction === "South") ? "NS" : "EW";
                 if (this.allRedElapsed > 0) return "red";
-                if (axis === this.activeAxis()) return this.inYellow ? "yellow" : "green";
+                if (axis === this.activeAxis()) {
+                    return this.inYellow ? "yellow" : "green";
+                }
                 return "red";
             }
 
             calculatePhaseDuration() {
                 if (this.mode === "Fixed") return 18.0;
+
                 const q = this.queues();
-                const activeQ = this.phase === 0 ? (q.North + q.South) : (q.East + q.West);
-                const otherQ = this.phase === 0 ? (q.East + q.West) : (q.North + q.South);
+                const ns = q.North + q.South;
+                const ew = q.East + q.West;
+
+                const activeQ = this.phase === 0 ? ns : ew;
+                const otherQ = this.phase === 0 ? ew : ns;
 
                 let duration = 8.0 + Math.min(20.0, activeQ * 2.2);
-                if (otherQ >= activeQ + 3) duration = Math.min(duration, 10.0);
+                if (otherQ >= activeQ + 3) {
+                    duration = Math.min(duration, 10.0);
+                }
+
                 this.activeSmartGreenTime = Math.max(8.0, Math.min(28.0, duration));
                 return this.activeSmartGreenTime;
             }
@@ -962,16 +853,14 @@
                 this.time += dt;
                 this.arrivalsNow();
 
-                // Signal Controller Timer
+                // Signal Timing State Machine
                 if (this.allRedElapsed > 0) {
-                    this.totalRedTime += dt;
                     this.allRedElapsed -= dt;
                     if (this.allRedElapsed <= 0) {
                         this.allRedElapsed = 0;
                         this.phaseElapsed = 0;
                     }
                 } else if (this.inYellow) {
-                    this.totalYellowTime += dt;
                     this.yellowElapsed += dt;
                     if (this.yellowElapsed >= 2.0) {
                         this.inYellow = false;
@@ -980,9 +869,6 @@
                         this.allRedElapsed = 1.0;
                     }
                 } else {
-                    if (this.phase === 0) this.nsGreenTime += dt;
-                    else this.ewGreenTime += dt;
-
                     this.phaseElapsed += dt;
                     if (this.phaseElapsed >= this.calculatePhaseDuration()) {
                         this.inYellow = true;
@@ -990,7 +876,7 @@
                     }
                 }
 
-                // Vehicle Kinematics & Lane Queue Following
+                // Vehicle Movement & Collision Avoidance
                 const laneX = { North: 270, South: 330 };
                 const laneY = { West: 270, East: 330 };
 
@@ -1014,55 +900,54 @@
                             let desired = car.y + car.speed * dt;
                             if (!canGo && car.y <= 195 && desired >= 195) desired = Math.min(car.y, 194);
                             if (frontPos !== null) desired = Math.min(desired, frontPos - minGap);
-                            car.y = desired; frontPos = car.y;
-                            if (car.y > 630) { car.cleared = true; this.dirCleared.North++; }
+                            car.y = desired;
+                            frontPos = car.y;
+                            if (car.y > 630) car.cleared = true;
 
                         } else if (direction === "South") {
                             car.x = laneX[direction];
                             let desired = car.y - car.speed * dt;
                             if (!canGo && car.y >= 405 && desired <= 405) desired = Math.max(car.y, 406);
                             if (frontPos !== null) desired = Math.max(desired, frontPos + minGap);
-                            car.y = desired; frontPos = car.y;
-                            if (car.y < -30) { car.cleared = true; this.dirCleared.South++; }
+                            car.y = desired;
+                            frontPos = car.y;
+                            if (car.y < -30) car.cleared = true;
 
                         } else if (direction === "West") {
                             car.y = laneY[direction];
                             let desired = car.x - car.speed * dt;
                             if (!canGo && car.x >= 405 && desired <= 405) desired = Math.max(car.x, 406);
                             if (frontPos !== null) desired = Math.max(desired, frontPos + minGap);
-                            car.x = desired; frontPos = car.x;
-                            if (car.x < -30) { car.cleared = true; this.dirCleared.West++; }
+                            car.x = desired;
+                            frontPos = car.x;
+                            if (car.x < -30) car.cleared = true;
 
                         } else if (direction === "East") {
                             car.y = laneY[direction];
                             let desired = car.x + car.speed * dt;
                             if (!canGo && car.x <= 195 && desired >= 195) desired = Math.min(car.x, 194);
                             if (frontPos !== null) desired = Math.min(desired, frontPos - minGap);
-                            car.x = desired; frontPos = car.x;
-                            if (car.x > 630) { car.cleared = true; this.dirCleared.East++; }
+                            car.x = desired;
+                            frontPos = car.x;
+                            if (car.x > 630) car.cleared = true;
                         }
 
+                        // Delay counter
                         const isMoving = Math.hypot(car.x - oldX, car.y - oldY) > 0.1;
                         if (!car.cleared && this.distanceToStop(car) >= 0 && this.distanceToStop(car) < 145 && !isMoving) {
                             car.waiting += dt;
                             this.totalWaitTime += dt;
-                            this.dirWaitTime[direction] += dt;
                         }
                     }
                 }
 
-                // Process Cleared Vehicles
+                // Remove cleared vehicles
                 const clearedNow = this.cars.filter(c => c.cleared);
                 this.clearedCount += clearedNow.length;
                 this.cars = this.cars.filter(c => !c.cleared);
 
-                // Update Lifetime Directional Peak Queues
-                const currentQ = this.queues();
-                for (let dir of DIRECTIONS) {
-                    this.dirPeakQueue[dir] = Math.max(this.dirPeakQueue[dir], currentQ[dir]);
-                }
-                const sumQ = Object.values(currentQ).reduce((a, b) => a + b, 0);
-                this.maxQueue = Math.max(this.maxQueue, sumQ);
+                const currentQ = Object.values(this.queues()).reduce((a, b) => a + b, 0);
+                this.maxQueue = Math.max(this.maxQueue, currentQ);
             }
 
             stats() {
@@ -1075,60 +960,35 @@
                     queue: Object.values(q).reduce((a, b) => a + b, 0),
                     maxQueue: this.maxQueue,
                     queuesByDir: q,
-                    peakByDir: this.dirPeakQueue,
-                    enteredByDir: this.dirEntered,
-                    clearedByDir: this.dirCleared,
-                    nsGreen: this.nsGreenTime,
-                    ewGreen: this.ewGreenTime,
-                    totalGreen: this.nsGreenTime + this.ewGreenTime,
-                    totalYellow: this.totalYellowTime,
-                    totalRed: this.totalRedTime,
                     time: this.time
                 };
             }
         }
 
-        /* Top-Down Intersection Renderer */
+        /* --------------------------------------------------------------------------
+           D. CANVAS RENDERER (Day & Night Mode)
+           -------------------------------------------------------------------------- */
         class SimulationRenderer {
-            static drawRoundedRect(ctx, x, y, width, height, radius) {
-                ctx.beginPath();
-                if (typeof ctx.roundRect === 'function') {
-                    ctx.roundRect(x, y, width, height, radius);
-                } else {
-                    ctx.moveTo(x + radius, y);
-                    ctx.lineTo(x + width - radius, y);
-                    ctx.arcTo(x + width, y, x + width, y + radius, radius);
-                    ctx.lineTo(x + width, y + height - radius);
-                    ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
-                    ctx.lineTo(x + radius, y + height);
-                    ctx.arcTo(x, y + height, x, y + height - radius, radius);
-                    ctx.lineTo(x, y + radius);
-                    ctx.arcTo(x, y, x + radius, y, radius);
-                    ctx.closePath();
-                }
-            }
-
             static drawIntersection(canvas, sim, isNight) {
                 const ctx = canvas.getContext('2d');
-                if (!ctx) return;
                 const w = canvas.width;
                 const scale = w / 600.0;
 
                 ctx.save();
                 ctx.scale(scale, scale);
 
-                // Grass Verges
+                // Grass Verges Background
                 ctx.fillStyle = isNight ? "#064e3b" : "#15803d";
                 ctx.fillRect(0, 0, 600, 600);
 
-                // Trees / Parks
+                // Park greenery
                 ctx.fillStyle = isNight ? "#022c22" : "#166534";
                 ctx.beginPath(); ctx.arc(80, 80, 60, 0, Math.PI * 2); ctx.fill();
                 ctx.beginPath(); ctx.arc(520, 80, 60, 0, Math.PI * 2); ctx.fill();
                 ctx.beginPath(); ctx.arc(80, 520, 60, 0, Math.PI * 2); ctx.fill();
                 ctx.beginPath(); ctx.arc(520, 520, 60, 0, Math.PI * 2); ctx.fill();
 
-                // Corner Buildings
+                // Buildings
                 this.drawBuilding(ctx, 20, 20, 110, 110, "#334155", isNight ? "#fef08a" : "#cbd5e1");
                 this.drawBuilding(ctx, 470, 20, 110, 110, "#475569", isNight ? "#fef08a" : "#cbd5e1");
                 this.drawBuilding(ctx, 20, 470, 110, 110, "#52525b", isNight ? "#fef08a" : "#cbd5e1");
@@ -1136,41 +996,65 @@
 
                 // Sidewalks
                 ctx.fillStyle = isNight ? "#475569" : "#94a3b8";
-                ctx.fillRect(185, 0, 230, 600); ctx.fillRect(0, 185, 600, 230);
+                ctx.fillRect(185, 0, 230, 600);
+                ctx.fillRect(0, 185, 600, 230);
 
-                // Asphalt Road Surface
+                // Asphalt
                 ctx.fillStyle = isNight ? "#1e293b" : "#334155";
-                ctx.fillRect(200, 0, 200, 600); ctx.fillRect(0, 200, 600, 200);
+                ctx.fillRect(200, 0, 200, 600);
+                ctx.fillRect(0, 200, 600, 200);
 
-                // Solid Outer Boundaries
-                ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3;
+                // Solid Road Margins
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.moveTo(200, 0); ctx.lineTo(200, 195); ctx.moveTo(400, 0); ctx.lineTo(400, 195);
-                ctx.moveTo(200, 405); ctx.lineTo(200, 600); ctx.moveTo(400, 405); ctx.lineTo(400, 600);
-                ctx.moveTo(0, 200); ctx.lineTo(195, 200); ctx.moveTo(0, 400); ctx.lineTo(195, 400);
-                ctx.moveTo(405, 200); ctx.lineTo(600, 200); ctx.moveTo(405, 400); ctx.lineTo(600, 400);
+                ctx.moveTo(200, 0); ctx.lineTo(200, 195);
+                ctx.moveTo(400, 0); ctx.lineTo(400, 195);
+                ctx.moveTo(200, 405); ctx.lineTo(200, 600);
+                ctx.moveTo(400, 405); ctx.lineTo(400, 600);
+                ctx.moveTo(0, 200); ctx.lineTo(195, 200);
+                ctx.moveTo(0, 400); ctx.lineTo(195, 400);
+                ctx.moveTo(405, 200); ctx.lineTo(600, 200);
+                ctx.moveTo(405, 400); ctx.lineTo(600, 400);
                 ctx.stroke();
 
-                // Center Dashed Lane Dividers
-                ctx.strokeStyle = "#cbd5e1"; ctx.lineWidth = 2; ctx.setLineDash([12, 12]);
+                // Dashed Line Divider
+                ctx.strokeStyle = "#cbd5e1";
+                ctx.lineWidth = 2;
+                ctx.setLineDash([12, 12]);
                 ctx.beginPath();
-                ctx.moveTo(300, 0); ctx.lineTo(300, 195); ctx.moveTo(300, 405); ctx.lineTo(300, 600);
-                ctx.moveTo(0, 300); ctx.lineTo(195, 300); ctx.moveTo(405, 300); ctx.lineTo(600, 300);
-                ctx.stroke(); ctx.setLineDash([]);
+                ctx.moveTo(300, 0); ctx.lineTo(300, 195);
+                ctx.moveTo(300, 405); ctx.lineTo(300, 600);
+                ctx.moveTo(0, 300); ctx.lineTo(195, 300);
+                ctx.moveTo(405, 300); ctx.lineTo(600, 300);
+                ctx.stroke();
+                ctx.setLineDash([]);
 
                 // Zebra Crossings
                 ctx.fillStyle = "#ffffff";
                 for (let i = 205; i < 395; i += 16) {
-                    ctx.fillRect(i, 180, 9, 15); ctx.fillRect(i, 405, 9, 15);
-                    ctx.fillRect(180, i, 15, 9); ctx.fillRect(405, i, 15, 9);
+                    ctx.fillRect(i, 180, 9, 15);
+                    ctx.fillRect(i, 405, 9, 15);
+                    ctx.fillRect(180, i, 15, 9);
+                    ctx.fillRect(405, i, 15, 9);
                 }
 
                 // Stop Lines
-                ctx.fillRect(200, 195, 100, 4); ctx.fillRect(300, 401, 100, 4);
-                ctx.fillRect(195, 300, 4, 100); ctx.fillRect(401, 200, 4, 100);
+                ctx.fillRect(200, 195, 100, 4);
+                ctx.fillRect(300, 401, 100, 4);
+                ctx.fillRect(195, 300, 4, 100);
+                ctx.fillRect(401, 200, 4, 100);
 
-                // Vehicles
-                for (let car of sim.cars) this.drawVehicle(ctx, car, isNight);
+                // Trees
+                this.drawTree(ctx, 165, 120, isNight);
+                this.drawTree(ctx, 435, 120, isNight);
+                this.drawTree(ctx, 165, 480, isNight);
+                this.drawTree(ctx, 435, 480, isNight);
+
+                // Render Vehicles
+                for (let car of sim.cars) {
+                    this.drawVehicle(ctx, car, isNight);
+                }
 
                 // Traffic Signals
                 this.drawTrafficLight(ctx, 355, 160, sim.lightState("North"));
@@ -1182,20 +1066,36 @@
             }
 
             static drawBuilding(ctx, x, y, w, h, color, winColor) {
-                ctx.fillStyle = color; ctx.fillRect(x, y, w, h);
-                ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, w, h);
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, w, h);
+
                 ctx.fillStyle = winColor;
                 for (let wx = x + 15; wx < x + w - 15; wx += 25) {
-                    for (let wy = y + 15; wy < y + h - 15; wy += 25) ctx.fillRect(wx, wy, 12, 12);
+                    for (let wy = y + 15; wy < y + h - 15; wy += 25) {
+                        ctx.fillRect(wx, wy, 12, 12);
+                    }
                 }
+            }
+
+            static drawTree(ctx, x, y, isNight) {
+                ctx.fillStyle = isNight ? "#064e3b" : "#14532d";
+                ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = isNight ? "#10b981" : "#22c55e";
+                ctx.beginPath(); ctx.arc(x - 3, y - 3, 9, 0, Math.PI * 2); ctx.fill();
             }
 
             static drawTrafficLight(ctx, x, y, state) {
                 ctx.save();
-                ctx.fillStyle = "#0f172a"; ctx.strokeStyle = "#475569"; ctx.lineWidth = 2;
+                ctx.fillStyle = "#0f172a";
+                ctx.strokeStyle = "#475569";
+                ctx.lineWidth = 2;
                 ctx.beginPath(); ctx.rect(x - 12, y - 12, 24, 24); ctx.fill(); ctx.stroke();
+
                 const colors = { red: "#ef4444", yellow: "#f59e0b", green: "#10b981" };
-                ctx.fillStyle = colors[state] || "#ef4444";
+                ctx.fillStyle = colors[state];
                 ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
                 ctx.restore();
             }
@@ -1203,35 +1103,52 @@
             static drawVehicle(ctx, car, isNight) {
                 ctx.save();
                 ctx.translate(car.x, car.y);
+
                 let angle = 0;
                 if (car.direction === "North") angle = Math.PI / 2;
                 if (car.direction === "South") angle = -Math.PI / 2;
                 if (car.direction === "West") angle = Math.PI;
                 if (car.direction === "East") angle = 0;
+
                 ctx.rotate(angle);
 
-                const len = car.spec.length, wid = car.spec.width;
+                const len = car.spec.length;
+                const wid = car.spec.width;
 
+                // Night Headlight Beams
                 if (isNight) {
                     ctx.fillStyle = "rgba(254, 240, 138, 0.25)";
-                    ctx.beginPath(); ctx.moveTo(len / 2, -wid / 2);
-                    ctx.lineTo(len / 2 + 60, -wid / 2 - 20); ctx.lineTo(len / 2 + 60, wid / 2 + 20);
-                    ctx.lineTo(len / 2, wid / 2); ctx.closePath(); ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(len / 2, -wid / 2);
+                    ctx.lineTo(len / 2 + 60, -wid / 2 - 20);
+                    ctx.lineTo(len / 2 + 60, wid / 2 + 20);
+                    ctx.lineTo(len / 2, wid / 2);
+                    ctx.closePath();
+                    ctx.fill();
                 }
 
+                // Body
                 ctx.fillStyle = car.spec.color;
-                this.drawRoundedRect(ctx, -len / 2, -wid / 2, len, wid, 3);
+                ctx.beginPath();
+                ctx.roundRect(-len / 2, -wid / 2, len, wid, 3);
                 ctx.fill();
 
-                ctx.fillStyle = "#0f172a"; ctx.fillRect(-len / 6, -wid / 2 + 1.5, len / 3, wid - 3);
+                // Roof/Glass
+                ctx.fillStyle = "#0f172a";
+                ctx.fillRect(-len / 6, -wid / 2 + 1.5, len / 3, wid - 3);
+
+                // Headlights
                 ctx.fillStyle = "#fef08a";
                 ctx.fillRect(len / 2 - 2, -wid / 2 + 1, 2, 2.5);
                 ctx.fillRect(len / 2 - 2, wid / 2 - 3.5, 2, 2.5);
+
                 ctx.restore();
             }
         }
 
-        /* Main Application Controller */
+        /* --------------------------------------------------------------------------
+           E. MAIN APP CONTROLLER
+           -------------------------------------------------------------------------- */
         class TrafficApp {
             constructor() {
                 this.canvasFixed = document.getElementById('canvasFixed');
@@ -1240,11 +1157,12 @@
                 this.running = false;
                 this.isNight = false;
                 this.speedMultiplier = 5.0;
-                this.targetDuration = 900;
+                this.targetDuration = 900; // 15 mins
                 this.demandRate = 7;
                 this.seed = 20261029;
 
-                this.lastTimestamp = null;
+                this.simTimeStep = 0.20;
+                this.tickInterval = null;
 
                 this.fixedSim = null;
                 this.smartSim = null;
@@ -1254,31 +1172,30 @@
                 this.initCharts();
                 this.resetSimulation();
                 this.initBackgroundCanvas();
-                this.startAnimationLoop();
             }
 
             initCharts() {
-                const ctxPeak = document.getElementById('chartPeakByDir').getContext('2d');
-                this.charts.peak = new Chart(ctxPeak, {
-                    type: 'bar',
+                const ctxCleared = document.getElementById('chartCleared').getContext('2d');
+                this.charts.cleared = new Chart(ctxCleared, {
+                    type: 'line',
                     data: {
-                        labels: ['North', 'South', 'East', 'West'],
+                        labels: [],
                         datasets: [
-                            { label: 'Fixed Signal', data: [0,0,0,0], backgroundColor: '#3b82f6' },
-                            { label: 'Smart Adaptive', data: [0,0,0,0], backgroundColor: '#16D6A5' }
+                            { label: 'Fixed Signal', data: [], borderColor: '#3b82f6', tension: 0.3 },
+                            { label: 'Smart Adaptive', data: [], borderColor: '#16D6A5', tension: 0.3 }
                         ]
                     },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } }
                 });
 
-                const ctxCleared = document.getElementById('chartClearedByDir').getContext('2d');
-                this.charts.cleared = new Chart(ctxCleared, {
-                    type: 'bar',
+                const ctxWait = document.getElementById('chartWait').getContext('2d');
+                this.charts.wait = new Chart(ctxWait, {
+                    type: 'line',
                     data: {
-                        labels: ['North', 'South', 'East', 'West'],
+                        labels: [],
                         datasets: [
-                            { label: 'Fixed Signal', data: [0,0,0,0], backgroundColor: '#3b82f6' },
-                            { label: 'Smart Adaptive', data: [0,0,0,0], backgroundColor: '#16D6A5' }
+                            { label: 'Fixed Signal', data: [], borderColor: '#3b82f6', tension: 0.3 },
+                            { label: 'Smart Adaptive', data: [], borderColor: '#16D6A5', tension: 0.3 }
                         ]
                     },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } }
@@ -1288,11 +1205,15 @@
             generateSchedule() {
                 const rng = new SeededRandom(this.seed);
                 const schedule = [];
+
                 for (let dir of DIRECTIONS) {
                     let t = rng.uniform(0.0, 2.0);
                     while (t < this.targetDuration) {
                         t += rng.exponential(this.demandRate / 60.0);
-                        if (t < this.targetDuration) schedule.push({ time: t, direction: dir, spec: rng.choice(VEHICLE_TYPES) });
+                        if (t < this.targetDuration) {
+                            const spec = rng.choice(VEHICLE_TYPES);
+                            schedule.push({ time: t, direction: dir, spec: spec });
+                        }
                     }
                 }
                 schedule.sort((a, b) => a.time - b.time);
@@ -1304,8 +1225,22 @@
                 const schedule = this.generateSchedule();
                 this.fixedSim = new IntersectionSimulation("Fixed", schedule, this.seed + 1);
                 this.smartSim = new IntersectionSimulation("Smart", schedule, this.seed + 2);
+
+                this.resetCharts();
                 this.draw();
                 this.updateUI();
+            }
+
+            resetCharts() {
+                this.charts.cleared.data.labels = [];
+                this.charts.cleared.data.datasets[0].data = [];
+                this.charts.cleared.data.datasets[1].data = [];
+                this.charts.cleared.update();
+
+                this.charts.wait.data.labels = [];
+                this.charts.wait.data.datasets[0].data = [];
+                this.charts.wait.data.datasets[1].data = [];
+                this.charts.wait.update();
             }
 
             togglePlayPause() {
@@ -1315,26 +1250,21 @@
 
             start() {
                 this.running = true;
-                this.lastTimestamp = performance.now();
-                const btn = document.getElementById('btnPlayPause');
-                if (btn) {
-                    btn.innerText = "⏸ PAUSE SIMULATION";
-                    btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-amber-400 text-slate-950 hover:bg-amber-300 transition shadow-lg shadow-amber-400/20 flex items-center gap-2";
-                }
+                document.getElementById('btnPlayPause').innerText = "⏸ PAUSE SIMULATION";
+                document.getElementById('btnPlayPause').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-amber-400 text-slate-950 hover:bg-amber-300 transition shadow-lg shadow-amber-400/20 flex items-center gap-2";
+                this.tickInterval = setInterval(() => this.tick(), 50 / this.speedMultiplier);
             }
 
             pause() {
                 this.running = false;
-                const btn = document.getElementById('btnPlayPause');
-                if (btn) {
-                    btn.innerText = "▶ START SIMULATION";
-                    btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-mint text-slate-950 hover:bg-mint/90 transition shadow-lg shadow-mint/20 flex items-center gap-2";
-                }
+                document.getElementById('btnPlayPause').innerText = "▶ START SIMULATION";
+                document.getElementById('btnPlayPause').className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-mint text-slate-950 hover:bg-mint/90 transition shadow-lg shadow-mint/20 flex items-center gap-2";
+                if (this.tickInterval) clearInterval(this.tickInterval);
             }
 
-            step() { 
-                if (this.running) this.pause(); 
-                this.tick(0.2); 
+            step() {
+                if (this.running) this.pause();
+                this.tick();
             }
 
             injectManual(dir) {
@@ -1344,35 +1274,37 @@
                 this.updateUI();
             }
 
-            startAnimationLoop() {
-                const loop = (timestamp) => {
-                    if (this.running) {
-                        if (!this.lastTimestamp) this.lastTimestamp = timestamp;
-                        let deltaReal = (timestamp - this.lastTimestamp) / 1000.0;
-                        this.lastTimestamp = timestamp;
+            tick() {
+                const dt = this.simTimeStep;
+                this.fixedSim.update(dt);
+                this.smartSim.update(dt);
 
-                        if (deltaReal > 0.1) deltaReal = 0.1; // Cap dt spike
+                if (this.fixedSim.time >= this.targetDuration) {
+                    this.pause();
+                }
 
-                        const simDt = deltaReal * this.speedMultiplier;
-                        this.tick(simDt);
-                    }
-                    requestAnimationFrame(loop);
-                };
-                requestAnimationFrame(loop);
+                // Update charts every 10 sim seconds
+                if (Math.floor(this.fixedSim.time) % 10 === 0 && Math.floor(this.fixedSim.time) !== this.lastChartTick) {
+                    this.lastChartTick = Math.floor(this.fixedSim.time);
+                    this.updateCharts();
+                }
+
+                this.draw();
+                this.updateUI();
             }
 
-            tick(simDt) {
-                try {
-                    this.fixedSim.update(simDt);
-                    this.smartSim.update(simDt);
+            updateCharts() {
+                const timeLabel = this.formatTime(this.fixedSim.time);
+                
+                this.charts.cleared.data.labels.push(timeLabel);
+                this.charts.cleared.data.datasets[0].data.push(this.fixedSim.clearedCount);
+                this.charts.cleared.data.datasets[1].data.push(this.smartSim.clearedCount);
+                this.charts.cleared.update();
 
-                    if (this.fixedSim.time >= this.targetDuration) this.pause();
-
-                    this.draw();
-                    this.updateUI();
-                } catch (err) {
-                    console.error("Simulation Tick Error:", err);
-                }
+                this.charts.wait.data.labels.push(timeLabel);
+                this.charts.wait.data.datasets[0].data.push(this.fixedSim.stats().avgWait.toFixed(1));
+                this.charts.wait.data.datasets[1].data.push(this.smartSim.stats().avgWait.toFixed(1));
+                this.charts.wait.update();
             }
 
             draw() {
@@ -1390,7 +1322,7 @@
                 const sF = this.fixedSim.stats();
                 const sS = this.smartSim.stats();
 
-                // Dashboard Telemetry Strip
+                // Telemetry Labels
                 document.getElementById('teleFixedArrived').innerText = sF.arrived;
                 document.getElementById('teleFixedCleared').innerText = sF.cleared;
                 document.getElementById('teleFixedQueue').innerText = sF.queue;
@@ -1401,12 +1333,14 @@
                 document.getElementById('teleSmartQueue').innerText = sS.queue;
                 document.getElementById('teleSmartAvgWait').innerText = sS.avgWait.toFixed(1) + "s";
 
+                // Phase Badges
                 document.getElementById('badgeFixedPhase').innerText = `${this.fixedSim.activeAxis() === "NS" ? "N/S" : "E/W"} ${this.fixedSim.inYellow ? "YELLOW" : "GREEN"}`;
                 document.getElementById('badgeSmartPhase').innerText = `${this.smartSim.activeAxis() === "NS" ? "N/S" : "E/W"} ${this.smartSim.inYellow ? "YELLOW" : "GREEN"} (${this.smartSim.activeSmartGreenTime.toFixed(0)}s)`;
 
+                // Clock
                 document.getElementById('txtSimClock').innerText = this.formatTime(sF.time);
 
-                // Comparison Bars
+                // Progress Bars & Deltas
                 const maxWait = Math.max(1, sF.avgWait, sS.avgWait);
                 document.getElementById('barWaitFixed').style.width = ((sF.avgWait / maxWait) * 100) + "%";
                 document.getElementById('barWaitSmart').style.width = ((sS.avgWait / maxWait) * 100) + "%";
@@ -1431,122 +1365,91 @@
                 const clearDiff = sF.cleared > 0 ? ((sS.cleared - sF.cleared) / sF.cleared * 100) : 0;
                 document.getElementById('badgeDeltaCleared').innerText = `${clearDiff >= 0 ? '+' : '-'}${Math.abs(clearDiff).toFixed(1)}% cleared`;
 
-                // Direction Monitor Cards
-                const updateDirCard = (dir, prefix) => {
-                    const ent = sS.enteredByDir[dir];
-                    const clrS = sS.clearedByDir[dir];
-                    const clrF = sF.clearedByDir[dir];
-                    const wait = sS.queuesByDir[dir];
-                    const peakS = sS.peakByDir[dir];
-                    const peakF = sF.peakByDir[dir];
-                    const avgW = (sS.dirWaitTime[dir] / Math.max(1, ent)).toFixed(1);
+                // Approach Table
+                document.getElementById('tblFixedNorth').innerText = sF.queuesByDir.North;
+                document.getElementById('tblFixedEast').innerText = sF.queuesByDir.East;
+                document.getElementById('tblFixedSouth').innerText = sF.queuesByDir.South;
+                document.getElementById('tblFixedWest').innerText = sF.queuesByDir.West;
 
-                    document.getElementById(`${prefix}Entered`).innerText = ent;
-                    document.getElementById(`${prefix}ClearedSmart`).innerText = clrS;
-                    document.getElementById(`${prefix}ClearedFixed`).innerText = clrF;
-                    document.getElementById(`${prefix}Waiting`).innerText = wait;
-                    document.getElementById(`${prefix}PeakSmart`).innerText = peakS;
-                    document.getElementById(`${prefix}PeakFixed`).innerText = peakF;
-                    document.getElementById(`${prefix}WaitTime`).innerText = avgW + "s";
+                document.getElementById('tblSmartNorth').innerText = sS.queuesByDir.North;
+                document.getElementById('tblSmartEast').innerText = sS.queuesByDir.East;
+                document.getElementById('tblSmartSouth').innerText = sS.queuesByDir.South;
+                document.getElementById('tblSmartWest').innerText = sS.queuesByDir.West;
 
-                    const densityEl = document.getElementById(`density${dir}`);
-                    if (wait >= 6) { densityEl.innerText = "HIGH"; densityEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/40"; }
-                    else if (wait >= 3) { densityEl.innerText = "MED"; densityEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-amber-400/20 text-amber-400 border border-amber-400/40"; }
-                    else { densityEl.innerText = "LOW"; densityEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-mint/20 text-mint border border-mint/40"; }
+                const setSig = (id, state) => {
+                    const el = document.getElementById(id);
+                    el.innerText = state.toUpperCase();
+                    el.className = state === "green" ? "text-center text-mint font-bold" : "text-center text-rose-500 font-bold";
                 };
-
-                updateDirCard('North', 'n');
-                updateDirCard('South', 's');
-                updateDirCard('East', 'e');
-                updateDirCard('West', 'w');
-
-                // Signal Timing Analytics
-                document.getElementById('fixedNsGreen').innerText = sF.nsGreen.toFixed(1) + "s";
-                document.getElementById('fixedEwGreen').innerText = sF.ewGreen.toFixed(1) + "s";
-                document.getElementById('fixedTotalGreen').innerText = sF.totalGreen.toFixed(1) + "s";
-                document.getElementById('fixedTotalYellow').innerText = sF.totalYellow.toFixed(1) + "s";
-                document.getElementById('fixedTotalRed').innerText = sF.totalRed.toFixed(1) + "s";
-
-                document.getElementById('smartNsGreen').innerText = sS.nsGreen.toFixed(1) + "s";
-                document.getElementById('smartEwGreen').innerText = sS.ewGreen.toFixed(1) + "s";
-                document.getElementById('smartTotalGreen').innerText = sS.totalGreen.toFixed(1) + "s";
-                document.getElementById('smartTotalYellow').innerText = sS.totalYellow.toFixed(1) + "s";
-                document.getElementById('smartTotalRed').innerText = sS.totalRed.toFixed(1) + "s";
-
-                // Detailed Table
-                const setTbl = (id, val) => document.getElementById(id).innerText = val;
-                setTbl('tblNEntered', sS.enteredByDir.North); setTbl('tblSEntered', sS.enteredByDir.South);
-                setTbl('tblEEntered', sS.enteredByDir.East); setTbl('tblWEntered', sS.enteredByDir.West);
-
-                setTbl('tblNClearedSmart', sS.clearedByDir.North); setTbl('tblSClearedSmart', sS.clearedByDir.South);
-                setTbl('tblEClearedSmart', sS.clearedByDir.East); setTbl('tblWClearedSmart', sS.clearedByDir.West);
-
-                setTbl('tblNClearedFixed', sF.clearedByDir.North); setTbl('tblSClearedFixed', sF.clearedByDir.South);
-                setTbl('tblEClearedFixed', sF.clearedByDir.East); setTbl('tblWClearedFixed', sF.clearedByDir.West);
-
-                setTbl('tblNPeakSmart', sS.peakByDir.North); setTbl('tblSPeakSmart', sS.peakByDir.South);
-                setTbl('tblEPeakSmart', sS.peakByDir.East); setTbl('tblWPeakSmart', sS.peakByDir.West);
-
-                setTbl('tblNWaitSmart', (sS.dirWaitTime.North / Math.max(1, sS.enteredByDir.North)).toFixed(1) + "s");
-                setTbl('tblSWaitSmart', (sS.dirWaitTime.South / Math.max(1, sS.enteredByDir.South)).toFixed(1) + "s");
-                setTbl('tblEWaitSmart', (sS.dirWaitTime.East / Math.max(1, sS.enteredByDir.East)).toFixed(1) + "s");
-                setTbl('tblWWaitSmart', (sS.dirWaitTime.West / Math.max(1, sS.enteredByDir.West)).toFixed(1) + "s");
-
-                // Update Charts
-                this.charts.peak.data.datasets[0].data = [sF.peakByDir.North, sF.peakByDir.South, sF.peakByDir.East, sF.peakByDir.West];
-                this.charts.peak.data.datasets[1].data = [sS.peakByDir.North, sS.peakByDir.South, sS.peakByDir.East, sS.peakByDir.West];
-                this.charts.peak.update();
-
-                this.charts.cleared.data.datasets[0].data = [sF.clearedByDir.North, sF.clearedByDir.South, sF.clearedByDir.East, sF.clearedByDir.West];
-                this.charts.cleared.data.datasets[1].data = [sS.clearedByDir.North, sS.clearedByDir.South, sS.clearedByDir.East, sS.clearedByDir.West];
-                this.charts.cleared.update();
+                setSig('tblSigNorth', this.smartSim.lightState("North"));
+                setSig('tblSigEast', this.smartSim.lightState("East"));
+                setSig('tblSigSouth', this.smartSim.lightState("South"));
+                setSig('tblSigWest', this.smartSim.lightState("West"));
             }
 
             initBackgroundCanvas() {
                 const canvas = document.getElementById('bgCanvas');
-                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
-                let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
-                window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
+                let w = canvas.width = window.innerWidth;
+                let h = canvas.height = window.innerHeight;
+
+                window.addEventListener('resize', () => {
+                    w = canvas.width = window.innerWidth;
+                    h = canvas.height = window.innerHeight;
+                });
 
                 const particles = Array.from({ length: 40 }, () => ({
-                    x: Math.random() * w, y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5
                 }));
 
                 const animateBG = () => {
                     ctx.clearRect(0, 0, w, h);
+                    ctx.strokeStyle = "rgba(56, 217, 255, 0.15)";
+                    ctx.lineWidth = 1;
+
                     for (let p of particles) {
                         p.x += p.vx; p.y += p.vy;
                         if (p.x < 0 || p.x > w) p.vx *= -1;
                         if (p.y < 0 || p.y > h) p.vy *= -1;
-                        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-                        ctx.fillStyle = "rgba(56, 217, 255, 0.4)"; ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = "rgba(56, 217, 255, 0.4)";
+                        ctx.fill();
                     }
+
                     requestAnimationFrame(animateBG);
                 };
                 animateBG();
             }
         }
 
-        /* Routing & Global Action Handlers */
+        /* --------------------------------------------------------------------------
+           F. PAGE ROUTING & EXPORT HANDLERS
+           -------------------------------------------------------------------------- */
         let app;
-        window.onload = () => { app = new TrafficApp(); };
 
-        function startAppFromHero() {
-            showPage('pageDashboard');
-            if (!app.running) app.start();
-        }
+        window.onload = () => {
+            app = new TrafficApp();
+        };
 
         function showPage(pageId) {
-            ['pageOpening', 'pageDashboard', 'pageAnalytics', 'pageHowItWorks', 'pageTeam'].forEach(p => {
+            const pages = ['pageOpening', 'pageDashboard', 'pageHowItWorks', 'pageTeam'];
+            pages.forEach(p => {
                 document.getElementById(p).classList.add('hidden-page');
             });
+
             document.getElementById(pageId).classList.remove('hidden-page');
 
             const header = document.getElementById('appHeader');
-            if (pageId === 'pageOpening') header.classList.add('hidden-page');
-            else header.classList.remove('hidden-page');
+            if (pageId === 'pageOpening') {
+                header.classList.add('hidden-page');
+            } else {
+                header.classList.remove('hidden-page');
+            }
         }
 
         function togglePlayPause() { app.togglePlayPause(); }
@@ -1556,6 +1459,7 @@
 
         function changeSpeed() {
             app.speedMultiplier = parseFloat(document.getElementById('selectSpeed').value);
+            if (app.running) { app.pause(); app.start(); }
         }
 
         function changeDemand() {
@@ -1570,69 +1474,28 @@
 
         function toggleDayNight() {
             app.isNight = !app.isNight;
-            document.getElementById('btnDayNight').innerHTML = app.isNight ? '🌙 Night Mode' : '☀️ Day Mode';
+            const btn = document.getElementById('btnDayNight');
+            btn.innerHTML = app.isNight ? '🌙 Night Mode' : '☀️ Day Mode';
             app.draw();
-        }
-
-        function openReportModal() {
-            const sF = app.fixedSim.stats();
-            const sS = app.smartSim.stats();
-
-            document.getElementById('rptSmartCleared').innerText = sS.cleared;
-            document.getElementById('rptFixedCleared').innerText = sF.cleared;
-
-            const waitDiff = sF.avgWait > 0 ? ((sF.avgWait - sS.avgWait) / sF.avgWait * 100) : 0;
-            document.getElementById('rptDelayRed').innerText = waitDiff.toFixed(1) + "%";
-            document.getElementById('rptSmartGreen').innerText = sS.totalGreen.toFixed(1) + "s";
-
-            document.getElementById('rptNEntered').innerText = sS.enteredByDir.North;
-            document.getElementById('rptNClearedS').innerText = sS.clearedByDir.North;
-            document.getElementById('rptNClearedF').innerText = sF.clearedByDir.North;
-            document.getElementById('rptNPeak').innerText = sS.peakByDir.North;
-
-            document.getElementById('rptSEntered').innerText = sS.enteredByDir.South;
-            document.getElementById('rptSClearedS').innerText = sS.clearedByDir.South;
-            document.getElementById('rptSClearedF').innerText = sF.clearedByDir.South;
-            document.getElementById('rptSPeak').innerText = sS.peakByDir.South;
-
-            document.getElementById('rptEEntered').innerText = sS.enteredByDir.East;
-            document.getElementById('rptEClearedS').innerText = sS.clearedByDir.East;
-            document.getElementById('rptEClearedF').innerText = sF.clearedByDir.East;
-            document.getElementById('rptEPeak').innerText = sS.peakByDir.East;
-
-            document.getElementById('rptWEntered').innerText = sS.enteredByDir.West;
-            document.getElementById('rptWClearedS').innerText = sS.clearedByDir.West;
-            document.getElementById('rptWClearedF').innerText = sF.clearedByDir.West;
-            document.getElementById('rptWPeak').innerText = sS.peakByDir.West;
-
-            document.getElementById('modalReport').classList.remove('hidden');
-        }
-
-        function closeReportModal() {
-            document.getElementById('modalReport').classList.add('hidden');
         }
 
         function exportCSV() {
             const sF = app.fixedSim.stats();
             const sS = app.smartSim.stats();
 
-            let csv = "HCL Jigsaw Edition 7 - BYTEBUSTERS Advanced Traffic Analytics Export\n";
-            csv += `Seed,${app.seed}\nDemand Rate (veh/min),${app.demandRate}\nSim Clock (s),${sS.time.toFixed(1)}\n\n`;
-
-            csv += "System,Direction,Entered,Cleared,Current Waiting,Peak Queue,Avg Wait (s),Total Green (s),Total Yellow (s),Total Red (s)\n";
-
-            for (let dir of DIRECTIONS) {
-                csv += `Smart Adaptive,${dir},${sS.enteredByDir[dir]},${sS.clearedByDir[dir]},${sS.queuesByDir[dir]},${sS.peakByDir[dir]},${(sS.dirWaitTime[dir] / Math.max(1, sS.enteredByDir[dir])).toFixed(2)},${sS.totalGreen.toFixed(1)},${sS.totalYellow.toFixed(1)},${sS.totalRed.toFixed(1)}\n`;
-            }
-            for (let dir of DIRECTIONS) {
-                csv += `Fixed Signal,${dir},${sF.enteredByDir[dir]},${sF.clearedByDir[dir]},${sF.queuesByDir[dir]},${sF.peakByDir[dir]},${(sF.dirWaitTime[dir] / Math.max(1, sF.enteredByDir[dir])).toFixed(2)},${sF.totalGreen.toFixed(1)},${sF.totalYellow.toFixed(1)},${sF.totalRed.toFixed(1)}\n`;
-            }
+            let csv = "HCL Jigsaw Edition 7 - BYTEBUSTERS Traffic Optimizer\n";
+            csv += `Seed,${app.seed}\nDemand Rate,${app.demandRate}\n\n`;
+            csv += "Metric,Fixed Signal,Smart Adaptive,Improvement (%)\n";
+            csv += `Vehicles Arrived,${sF.arrived},${sS.arrived},0%\n`;
+            csv += `Vehicles Cleared,${sF.cleared},${sS.cleared},${(((sS.cleared - sF.cleared) / Math.max(1, sF.cleared)) * 100).toFixed(1)}%\n`;
+            csv += `Average Wait Time (s),${sF.avgWait.toFixed(2)},${sS.avgWait.toFixed(2)},${(((sF.avgWait - sS.avgWait) / Math.max(0.1, sF.avgWait)) * 100).toFixed(1)}%\n`;
+            csv += `Peak Queue,${sF.maxQueue},${sS.maxQueue},${sF.maxQueue - sS.maxQueue} veh\n`;
 
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.setAttribute('href', url);
-            a.setAttribute('download', `BYTEBUSTERS_Directional_Analytics_${app.seed}.csv`);
+            a.setAttribute('download', `BYTEBUSTERS_Traffic_Results_${app.seed}.csv`);
             a.click();
         }
     </script>
